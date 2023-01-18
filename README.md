@@ -1,1 +1,0 @@
-# minsilu.github.io
