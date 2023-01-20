@@ -1,2 +1,2 @@
 # minsilu.github.io
-**My howepage:** https://minsilu.github.io.
+**My page:** https://minsilu.github.io.
