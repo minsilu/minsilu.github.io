@@ -26,6 +26,20 @@
     <link rel="stylesheet" href="/css/main.css">
   
 
+
+<script type="text/javascript" async
+ src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      processEscapes: true
+    }
+  });
+  </script>
+  
 <meta name="generator" content="Hexo 7.1.1"></head>
   <body data-theme="light" class="notransition">
     <script>
@@ -284,10 +298,81 @@
   </header>
   <main class="page-content" aria-label="Content">
       <div class="post">
-        <h1 id="Detailed-Project-Name"><a href="#Detailed-Project-Name" class="headerlink" title="Detailed Project Name"></a>Detailed Project Name</h1><p><img src="/path/to/your/image.jpg" alt="Project Image"></p>
-<h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>Full abstract of the project.</p>
-<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>Project introduction and details.</p>
-<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>Project conclusion.</p>
+        <p>Paper: <a target="_blank" rel="noopener" href="https://www.biorxiv.org/content/10.1101/2023.10.25.564065v1">DrugCLIP: Contrastive Protein-Molecule Representation Learning for Virtual Screening</a></p>
+<p>In the ever-evolving landscape of drug discovery, the quest for efficiency and precision in <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Virtual_screening">Virtual screening (VS)</a> has led to the development of <a target="_blank" rel="noopener" href="https://www.biorxiv.org/content/10.1101/2023.10.25.564065v1">DrugCLIP</a>. </p>
+<h2 id="Comparing-to-Traditional-Methods"><a href="#Comparing-to-Traditional-Methods" class="headerlink" title="Comparing to Traditional Methods"></a>Comparing to Traditional Methods</h2><ul>
+<li><strong>Docking simulations</strong>: Restricted library, highly time-consuming (~ 3s&#x2F;molecule). It is impractical when dealing with large libraries ($10^9$).</li>
+<li><strong>Supervised learning methods</strong>: Strong dependency on limited data with reliable binding-affinity labels. Also restricted by the scarcity of reliable negative samples. Have not yet surpassed docking methods.</li>
+<li><strong>DrugCLIP</strong>: A dense retrieval approach (inspired by CLIP), uses contrastive learning to align representations of binding protein pockets and molecules without explicit binding-affinity scores. DrugCLIP allows for offline pre-computation of protein and molecule encodings, bringing high efficiency to online inference on billions of molecules.</li>
+</ul>
+<h2 id="How-Does-DrugCLIP-Work"><a href="#How-Does-DrugCLIP-Work" class="headerlink" title="How Does DrugCLIP Work?"></a>How Does DrugCLIP Work?</h2><h3 id="Problem-Setting"><a href="#Problem-Setting" class="headerlink" title="Problem Setting"></a>Problem Setting</h3><p>Old virtual screening paradigm: Given a protein pocket $p$ and a set of small molecules $M&#x3D;{m_1, m_2, \dots, m_n}$, the objective of virtual screening is to identify the top $k$ candidates with the highest probability of binding to the target pocket, guided by a scoring function that assesses the pairwise data between $p$ and $m_i$.</p>
+<p>Our work views it as a dense retrieval task. Reformulating virtual screening as a similarity matching problem: Given a protein pocket as the query, we aim to retrieve from a large-scale molecule library the most relevant molecules with the highest probability of binding to the target pocket.</p>
+<h3 id="Framework"><a href="#Framework" class="headerlink" title="Framework"></a>Framework</h3><p>At the heart of DrugCLIP lies the CLIP (Contrastive Language–Image Pre-training) framework. Originally designed for understanding and correlating textual and visual information, CLIP’s principles have been adapted to serve the unique context of drug discovery. It learns to distinguish between matching and non-matching pairs of protein and molecule representations.<br><img src="/projects/drupclip/f1.png" alt="training procedure"></p>
+<h4 id="Encoders"><a href="#Encoders" class="headerlink" title="Encoders"></a>Encoders</h4><ul>
+<li>The architecture is followed by <a target="_blank" rel="noopener" href="https://openreview.net/forum?id=6K2RM6wVqKu">UniMol</a>.</li>
+</ul>
+<h4 id="Objective"><a href="#Objective" class="headerlink" title="Objective"></a>Objective</h4><ul>
+<li>Similarity score: Dot product of the representation of protein $x^p$ and molecule $x^m$.</li>
+<li>In-batch sampling strategy for negative and positive pairs.</li>
+</ul>
+<!-- Q:what is the difference bt it andt he cos sim? -->
+
+<p>Pocket-to-Mol loss function:</p>
+<p>$$<br>L_{pk}(x_{pk}, {x_{mi}}^N_{i&#x3D;1}) &#x3D; -\frac{1}{N} \log \frac{\exp(s(x_{pk}, x_{mk})&#x2F;\tau)}{\sum^N_{i&#x3D;1} \exp(s(x_{pk}, x_{mi})&#x2F;\tau)}<br>$$</p>
+<!-- \[L_{mk}(x_{mk}, \{x_{pi}\}^N_{i=1}) = -\frac{1}{N} \log \frac{\exp(s(x_{pk}, x_{mk})/\tau)}{\sum^N_{i=1} \exp(s(x_{pi}, x_{mk})/\tau)}\] -->
+
+<ul>
+<li>$L_{pk}$: Pocket-to-Mol loss for a given protein $x_{pk}$.</li>
+<li>$x_{pk}$: The protein of interest in the pair.</li>
+<li>$x_{mk}$: The correct binding molecule for protein $x_{pk}$.</li>
+<li>$x_{mi}$: Molecules in the dataset, where $i$ ranges from 1 to $N$, including the correct binding molecule $x_{mk}$.</li>
+<li>$s(x_{pk}, x_{mi})$: Similarity score between protein $x_{pk}$ and molecule $x_{mi}$, calculated using a similarity function such as dot product or cosine similarity.</li>
+<li>$\tau$: Temperature parameter in the softmax function, adjusting the distribution’s sharpness.</li>
+<li>$N$: Batch size, representing the number of protein-molecule pairs in the dataset.</li>
+</ul>
+<p>Mol-to-Pocket loss:</p>
+<p>$$L_{mk}(x_{mk}, {x_{pi}}^N_{i&#x3D;1}) &#x3D; -\frac{1}{N} \log \frac{\exp(s(x_{pk}, x_{mk})&#x2F;\tau)}{\sum^N_{i&#x3D;1} \exp(s(x_{pi}, x_{mk})&#x2F;\tau)}$$</p>
+<p>Final Loss:<br>$$ L &#x3D; \frac{1}{2} \sum_{k&#x3D;1}^{N} (L_{pk} + L_{mk}) $$ </p>
+<h3 id="Data"><a href="#Data" class="headerlink" title="Data"></a>Data</h3><h4 id="Trainning-Data"><a href="#Trainning-Data" class="headerlink" title="Trainning Data"></a>Trainning Data</h4><ul>
+<li><p>One of the advantages of our method is that we can facilitate the usage of large-scale unlabeled data beyond densely annotated small datasets such as PDBBind, BioLip, and ChEMBL.</p>
+<table>
+<thead>
+<tr>
+<th>Dataset</th>
+<th>Complexes</th>
+<th>Preprocess</th>
+<th>Link</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>PDBBind 2019</td>
+<td>&gt;17000</td>
+<td>protein-ligand complex structures along with their binding-affinity labels</td>
+<td><a target="_blank" rel="noopener" href="http://www.pdbbind.org.cn/home/longsiyu/projects/msESM_clip/data/pdbbind_2019">PDBBind 2019</a></td>
+</tr>
+<tr>
+<td>BioLip</td>
+<td>122861</td>
+<td>filter out all complexes that contain peptides, DNA, RNA, and single ions</td>
+<td><a target="_blank" rel="noopener" href="https://zhanggroup.org/BioLiP/index.cgi/home/longsiyu/projects/msESM_clip/data/biolip">BioLip</a></td>
+</tr>
+<tr>
+<td>ChEMBL</td>
+<td>around 1000</td>
+<td>use proteins with only one known binding pocket, pair the pocket with all positive binders</td>
+<td><a target="_blank" rel="noopener" href="https://www.ebi.ac.uk/chembl/">ChEMBL</a></td>
+</tr>
+</tbody></table>
+</li>
+<li><p>We also introduce a biological-knowledge inspired augmentation method, <em>HomoAug</em>.<br><img src="/projects/drupclip/f2.png" alt="homo"><br>The pocket protein instances from PDBBind are searched for homologous counterparts in the AlphaFold Protein Structure Database. Then, the TMalign method is employed to achieve structural alignment between the homologous protein and the original protein.</p>
+</li>
+</ul>
+<h2 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h2><ul>
+<li>Evaluation on <a target="_blank" rel="noopener" href="https://dude.docking.org/">DUD-E</a> Benchmark<br><img src="/projects/drupclip/t1.png" alt="homo"></li>
+<li>Evaluation on <a target="_blank" rel="noopener" href="https://drugdesign.unistra.fr/LIT-PCBA/">LIT-PCBA</a> Benchmark<br><img src="/projects/drupclip/t2.png" alt="homo"></li>
+<li>Efficiency Analysis for Large-scale Virtual Screening<br><img src="/projects/drupclip/f3.png" alt="homo"></li>
+</ul>
+<h2 id="The-Future-of-DrugCLIP"><a href="#The-Future-of-DrugCLIP" class="headerlink" title="The Future of DrugCLIP"></a>The Future of DrugCLIP</h2><p>As we continue to refine and expand the capabilities of DrugCLIP, its potential to accelerate the drug discovery process is immense. By offering a more reliable, efficient, and scalable solution, DrugCLIP paves the way for the identification of novel drug candidates.</p>
 
        </div>
          <div class="dis">
@@ -322,5 +407,9 @@
     };
   </script>
   <script defer src="https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"></script>
+
+
+
+  
 </body>
 </html>
