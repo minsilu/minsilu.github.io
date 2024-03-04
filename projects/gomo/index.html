@@ -1,0 +1,457 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Search Strategies for Classic Board Game Mastery [ Minsi Lu ]</title>
+
+  <link rel="icon" href="/img/my.ico">
+
+
+    <meta name="author" content="Minsi Lu">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml " title="Minsi Lu" type="application/atom+xml">
+
+
+  
+    <link rel="stylesheet" href="/css/main.css">
+  
+
+
+<script type="text/javascript" async
+ src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      processEscapes: true
+    }
+  });
+  </script>
+  
+<meta name="generator" content="Hexo 7.1.1"></head>
+  <body data-theme="light" class="notransition">
+    <script>
+      const body = document.body;
+      const data = body.getAttribute("data-theme");
+      const initTheme = (state) => {
+        if (state === "dark") {
+          body.setAttribute("data-theme", "dark");
+        } else if (state === "light") {
+          body.removeAttribute("data-theme");
+        } else {
+          localStorage.setItem("theme", data);
+        }
+      };
+   
+      initTheme(localStorage.getItem("theme"));
+      
+      setTimeout(() => body.classList.remove("notransition"), 75);
+    </script>
+  <div class="navbar" role="navigation">
+    <nav class="menu">
+      <input type="checkbox" id="menu-trigger" class="menu-trigger" />
+      <label for="menu-trigger">
+        <span class="menu-icon">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 512 512"
+          >
+            <path
+              d="M64,384H448V341.33H64Zm0-106.67H448V234.67H64ZM64,128v42.67H448V128Z"
+            />
+          </svg>
+        </span>
+      </label>
+      <a id="mode">
+        <svg
+          class="mode-sunny"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 512 512"
+        >
+          <title>LIGHT</title>
+          <line
+            x1="256"
+            y1="48"
+            x2="256"
+            y2="96"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="256"
+            y1="416"
+            x2="256"
+            y2="464"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="108.92"
+            x2="369.14"
+            y2="142.86"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="369.14"
+            x2="108.92"
+            y2="403.08"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="464"
+            y1="256"
+            x2="416"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="96"
+            y1="256"
+            x2="48"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="403.08"
+            x2="369.14"
+            y2="369.14"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="142.86"
+            x2="108.92"
+            y2="108.92"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <circle
+            cx="256"
+            cy="256"
+            r="80"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+        </svg>
+        <svg
+          class="mode-moon"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 512 512"
+        >
+          <title>DARK</title>
+          <line
+            x1="256"
+            y1="48"
+            x2="256"
+            y2="96"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="256"
+            y1="416"
+            x2="256"
+            y2="464"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="108.92"
+            x2="369.14"
+            y2="142.86"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="369.14"
+            x2="108.92"
+            y2="403.08"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="464"
+            y1="256"
+            x2="416"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="96"
+            y1="256"
+            x2="48"
+            y2="256"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="403.08"
+            y1="403.08"
+            x2="369.14"
+            y2="369.14"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <line
+            x1="142.86"
+            y1="142.86"
+            x2="108.92"
+            y2="108.92"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+          <circle
+            cx="256"
+            cy="256"
+            r="80"
+            style="stroke-linecap:round;stroke-miterlimit:10;stroke-width:32px"
+          />
+        </svg>
+      </a>
+      <div class="trigger">
+        <div class="trigger-container">
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/"> Home</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/about/"> About me</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/publications/"> Publications</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/projects/"> Projects</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/cv/mycv.pdf"> CV</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " target="_blank" rel="noopener" href="https://github.com/minsilu"> GitHub</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/blog/"> Blog</a>
+          
+            
+            
+            
+            
+            
+            
+            <a class="menu-link " href="/contact/"> Contact</a>
+          
+        </div>
+      </div>
+    </nav>
+  </div>
+  
+<div class="wrapper">
+  <header class="header">
+    <h1 class="header-title center">AI Search Strategies for Classic Board Game Mastery</h1>
+  </header>
+  <main class="page-content" aria-label="Content">
+      <div class="post">
+        <p>Repo: <a target="_blank" rel="noopener" href="https://github.com/minsilu/Gomoku-Genius--AI-Search-Strategies-for-Classic-Board-Game-Mastery">Gomoku Genius: AI Search Strategies for Classic Board Game Mastery</a></p>
+<h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>In this project, we explore five different artificial intelligence game-playing algorithms: minimax search, Alpha-Beta pruning, truncated search, naive Monte Carlo Tree Search (MCTS), and AlphaZero based on evaluation functions. These algorithms address the issues of search complexity and evaluation function design to varying degrees. We have implemented and conducted comparative analyses of these algorithms, evaluating their performance from the perspectives of game outcomes and chess strategy.</p>
+<h2 id="Problem-1-Implementation-of-Minimax-Algorithm-in-Tic-Tac-Toe"><a href="#Problem-1-Implementation-of-Minimax-Algorithm-in-Tic-Tac-Toe" class="headerlink" title="Problem 1: Implementation of Minimax Algorithm in Tic-Tac-Toe"></a>Problem 1: Implementation of Minimax Algorithm in Tic-Tac-Toe</h2><h3 id="Problem-Description"><a href="#Problem-Description" class="headerlink" title="Problem Description"></a>Problem Description</h3><p>Tic-Tac-Toe is a simple two-player zero-sum game, where each player alternates placing their pieces on a 3x3 board. The objective is to place three of one’s own pieces in any row, column, or diagonal. When a player achieves this goal, they win the match. If the board is filled without any player reaching the goal, the match ends in a draw. Due to the relatively small state space of Tic-Tac-Toe, we can use a complete search (i.e., traversing all possible game states) to find the optimal strategy. Thus, the minimax search is very effective in Tic-Tac-Toe. It can quickly calculate all possible moves and their outcomes, always selecting the best strategy.</p>
+<h3 id="Algorithm-Analysis"><a href="#Algorithm-Analysis" class="headerlink" title="Algorithm Analysis"></a>Algorithm Analysis</h3><p>The minimax algorithm is a tree-based search that starts from the current state and considers all possible actions. The algorithm assigns roles of maximizer and minimizer to the two players, where one player aims to maximize gains, and the other aims to minimize losses. In this case, we use the minimax to determine the best moves for the corresponding player as the maximizer. In the minimax function, we first check if the game has ended. If the game is over, we assign a value to the state based on the winning side. If the game has not ended, we execute the corresponding search strategy based on whether the current player is a maximizer or a minimizer. We iterate through all possible actions, recursively calling the minimax function in each iteration to calculate the value of sub-states. Then, we update the node value and the best action based on whether the current player is a maximizer or a minimizer.</p>
+<h3 id="Running-Results"><a href="#Running-Results" class="headerlink" title="Running Results"></a>Running Results</h3><p><strong>AI Performance:</strong> In human vs. AI matches, the AI demonstrates formidable strength through Minimax search, finding unbeatable strategies regardless of playing order. If both sides play optimally, the game always ends in a draw. The AI performs even better against suboptimal strategies, ensuring it either wins or ties, making it challenging for average players to win against AI optimized with Minimax search.</p>
+<h2 id="Problem-2-Implementation-and-Acceleration-of-Alpha-Beta-Search-Algorithm"><a href="#Problem-2-Implementation-and-Acceleration-of-Alpha-Beta-Search-Algorithm" class="headerlink" title="Problem 2: Implementation and Acceleration of Alpha-Beta Search Algorithm"></a>Problem 2: Implementation and Acceleration of Alpha-Beta Search Algorithm</h2><p>Alpha-beta pruning is a method to reduce the search space in the Minimax search process, enhancing search efficiency.</p>
+<p>The essence of pruning is to use information from explored nodes to decide whether it’s worthwhile to explore other nodes. The extent of search speed improvement depends on the tree structure and the order of node evaluation. In the search tree, each node maintains two values, $\alpha$ and $\beta$, representing the current best values for the maximizer and minimizer, respectively. In the best case, pruning can reduce the search space by half, significantly improving search efficiency. The time complexity can be reduced to $O(b^{\frac{m}{2}})$, where $b$ is the branching factor, and $m$ is the search depth. However, the effectiveness of pruning in practice is influenced by the order of node evaluations. The best pruning results occur when nodes are evaluated in the optimal order; the worst results occur when evaluated in the worst order.</p>
+<p>In our experiment implementing alpha-beta pruning, there was a noticeable increase in move speed compared to the naive minimax, with the actual running times as follows:</p>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>AlphaBetaSearchPlayer (s)</th>
+<th>MinimaxSearchPlayer (s)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>2.095</td>
+<td>7675.695</td>
+</tr>
+<tr>
+<td>2</td>
+<td>1.408</td>
+<td>646.496</td>
+</tr>
+<tr>
+<td>3</td>
+<td>0.359</td>
+<td>65.328</td>
+</tr>
+<tr>
+<td>4</td>
+<td>0.187</td>
+<td>5.342</td>
+</tr>
+<tr>
+<td>5</td>
+<td>0.016</td>
+<td>0.360</td>
+</tr>
+<tr>
+<td>6</td>
+<td>0.000</td>
+<td>0.078</td>
+</tr>
+<tr>
+<td>7</td>
+<td>0.000</td>
+<td>0.000</td>
+</tr>
+</tbody></table>
+<p>The branching factor varies at each level, and the search depth is not necessarily 12 - number of moves + 1, but the results clearly show that alpha-beta search significantly accelerates compared to naive minimax.</p>
+<h2 id="Problem-3-Truncated-Search-and-Evaluation-Function-Design"><a href="#Problem-3-Truncated-Search-and-Evaluation-Function-Design" class="headerlink" title="Problem 3: Truncated Search and Evaluation Function Design"></a>Problem 3: Truncated Search and Evaluation Function Design</h2><p>Given the deep search trees in actual Gomoku, even Alpha-beta AI struggles to make the first move. We employ truncated search here. When a shallow search can determine the outcome, it returns the final score; otherwise, it uses an evaluation function to assess the current state and truncates the search. The evaluation function considers:</p>
+<ul>
+<li>The counts of live fours, straight fours, live threes, sleeping threes, live twos</li>
+<li>The maximum distance of the furthest piece from the board center (ranging from 0 to 1)</li>
+</ul>
+<p>Weights are assigned based on the threat level of each pattern, with higher weights for patterns closer to winning. Asymmetric scoring based on the current player versus the opponent is used, subtracting the opponent’s score from the player’s total score. The evaluation function’s weights are designed as follows for the player and the opponent, highlighting the strategic importance of forming certain patterns and prioritizing central control and offensive strategies.</p>
+<h2 id="Problem-4-MCTS-Implementation-and-Battles-Against-Alpha-Beta-Search"><a href="#Problem-4-MCTS-Implementation-and-Battles-Against-Alpha-Beta-Search" class="headerlink" title="Problem 4: MCTS Implementation and Battles Against Alpha-Beta Search"></a>Problem 4: MCTS Implementation and Battles Against Alpha-Beta Search</h2><p>In the given battle results, we observe that players using Alpha-Beta pruning search (CuttingOffAlphaBetaSearchPlayer) significantly outperform those using MCTS (MCTSPlayer). The results of 10 matches are recorded as follows:</p>
+<table>
+<thead>
+<tr>
+<th>Player 1</th>
+<th>Player 2</th>
+<th>Player 1 Wins</th>
+<th>Player 2 Wins</th>
+<th>Ties</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>MCTSPlayer</td>
+<td>CuttingOffAlphaBetaSearchPlayer</td>
+<td>1</td>
+<td>8</td>
+<td>1</td>
+</tr>
+<tr>
+<td>CuttingOffAlphaBetaSearchPlayer</td>
+<td>MCTSPlayer</td>
+<td>9</td>
+<td>1</td>
+<td>0</td>
+</tr>
+</tbody></table>
+<p>The results indicate that Alpha-Beta pruning search has a notably higher win rate and more rational moves. In contrast, the naive MCTS, due to its randomness and exploratory nature, may not have enough advantages in such simple games. MCTS relies on random games to evaluate nodes when exploring new ones, which might lead to lower search efficiency, affecting the final battle outcomes.</p>
+<p>From the gameplay perspective, MCTS’s moves typically show high exploratory behavior. Since its strategy is not entirely based on the current situation’s evaluation but balances exploration and exploitation by simulating numerous random games, MCTS might try some unconventional and seemingly irrational moves. MCTS lacks response to many threatening patterns and does not always aim to control the center, sometimes considering blocking only when facing a live-four situation. Therefore, in Gomoku, the naive implementation of MCTS with random simulations may not be an effective method for playouts.</p>
+<h2 id="Problem-5-Comparison-Between-MCTS-and-AlphaZero"><a href="#Problem-5-Comparison-Between-MCTS-and-AlphaZero" class="headerlink" title="Problem 5: Comparison Between MCTS and AlphaZero"></a>Problem 5: Comparison Between MCTS and AlphaZero</h2><p>In our implementation, AlphaZero introduces an artificial evaluation function into MCTS. According to the battle results provided, AlphaZeroPlayer clearly has an advantage in matches, mostly defeating MCTSPlayer with only a few games ending in a draw or with MCTSPlayer winning. This indicates that the improvements made by AlphaZero indeed make AI moves more rational.</p>
+<p>To further analyze whether AlphaZero makes more rational moves, we need to conduct a detailed analysis of the gameplay. Naive MCTS relies on random games to evaluate positions, leading to irrational moves. However, AlphaZero significantly improves the accuracy of situation assessment by introducing the artificial evaluation function from Problem Three into MCTS. This makes the search process more effective, better exploring advantageous moves and balancing exploration and exploitation during decision-making. When searching, AlphaZero tends to find moves with high evaluation values, meaning it can better identify key positions in the game, such as defending against potential threats, attacking the opponent’s weaknesses, forming advantageous patterns, etc. This evaluation function-based search strategy makes AlphaZero’s moves more strategic and targeted, thus gaining an advantage in matches.</p>
+<table>
+<thead>
+<tr>
+<th>Player 1</th>
+<th>Player 2</th>
+<th>Player 1 Wins</th>
+<th>Player 2 Wins</th>
+<th>Ties</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>MCTSPlayer</td>
+<td>AlphaZeroPlayer</td>
+<td>1</td>
+<td>8</td>
+<td>1</td>
+</tr>
+<tr>
+<td>AlphaZeroPlayer</td>
+<td>MCTSPlayer</td>
+<td>10</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody></table>
+<p>In conclusion, by introducing the artificial evaluation function from Problem Three, AlphaZero achieves higher accuracy and efficiency in the search process, making AI moves more rational. Both the battle results and specific gameplay analysis support this viewpoint. Although AlphaZero has not reached the level of AlphaGo Zero trained with deep learning, its performance in Gomoku AI is commendable.</p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>In this project, we successfully implemented five different game-playing algorithms and evaluated them from the perspectives of game outcomes and chess strategy. We found that the Alpha-Beta pruning algorithm based on minimax search + truncated search somewhat reduces search complexity but is still limited by the design of the evaluation function. While naive MCTS escapes the constraints of the evaluation function, its method of evaluating through random games results in slower and less effective moves.</p>
+<p>In contrast, the AlphaZero algorithm, based on the evaluation function introduced into MCTS, makes the move process more rational and effective. However, it’s important to note that the evaluation function in this project is based on artificial features and may have certain limitations. In practice, a deep network learning evaluation function might be used to overcome these.</p>
+
+       </div>
+         <div class="dis">
+    
+     
+
+  </div>
+  </main>
+</div>
+  <footer class="footer">
+    <small class="footer_copyright">
+      <div id="bottom-inner">
+        © 2021 Site by Minsi Lu.
+      </div>
+    </small>
+  </footer>
+  
+  
+
+    
+      <script src="/js/main.js"></script>
+    
+      <script src="/js/custom-filter.js"></script>
+    
+  
+  <script>
+    window.FPConfig = {
+      delay: 0,
+      ignoreKeywords: [],
+      maxRPS: 3,
+      hoverDelay: 50,
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"></script>
+
+
+
+  
+</body>
+</html>
