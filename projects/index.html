@@ -300,70 +300,108 @@
       <div class="post">
         <div id="category-selectors" style="text-align: center; width: 100%;">
   <button class="category-selector" data-category="All" style="margin: 10px;">All</button>
-  <button class="category-selector" data-category="AI-for-Science" style="margin: 10px;">AI for Science</button>
+  <button class="category-selector" data-category="GenAI-Multimodal" style="margin: 10px;">Gen AI & Multimodal</button>
+  <button class="category-selector" data-category="Info-Retrieval" style="margin: 10px;">Vector Database & IR</button>
+  <button class="category-selector" data-category="Graph-Learning" style="margin: 10px;">Graph Learning</button>
   <button class="category-selector" data-category="Others" style="margin: 10px;">Others</button>
 </div>
 
 <div class="projects-container">
-  <div class="project-item AI-for-Science" style="margin-bottom: 20px;">
-    <h3 style="text-align: left; margin-bottom: 20px;">Biomolecular design</h3>
+
+  <!-- DeepSearch -->
+  <div class="project-item Info-Retrieval GenAI-Multimodal" style="margin-bottom: 20px;">
+    <h3 style="text-align: left; margin-bottom: 20px;">Vector Search Systems</h3>
+    <p><b>Biology-Informed Filtering Adaptive ANN Search for Tandem Mass Spectrometry</b></p>
+    <a href="/projects/deepsearch">
+      <img src="/projects/deepsearch/f1.png" alt="Project Image" style="max-width: 100%; height: auto; display: block; margin: 0 auto 10px;">
+    </a>
+    <p>Advisor: Prof. Ming Li, Prof. Xiao Hu</p>
+    <p>Designed a hybrid range-filtered approximate nearest neighbor (RF-ANNS) system for tandem MS open search, integrating mass-aware columnar storage with HNSW-based graph search to address large-tolerance (±500 Da) peptide identification. Achieved 13× speedup over MSFragger (500 Da tolerance) while maintaining competitive identification rates at 1% FDR.<a href="/projects/deepsearch" style="color: blue;">[Read more]</a></p>
+    <table><tr><td style="height: 0px;"></td></tr></table>
+  </div>
+
+  <!-- DrugCLIP -->
+  <div class="project-item GenAI-Multimodal Info-Retrieval" style="margin-bottom: 20px;">
+    <h3 style="text-align: left; margin-bottom: 20px;">Representation Learning</h3>
     <p><b>DrugCLIP: Contrastive Protein-Molecule Representation Learning for Virtual Screening</b></p>
     <a href="/projects/drupclip">
       <img src="/projects/drupclip/f1.png" alt="Project Image" style="max-width: 100%; height: auto; display: block; margin: 0 auto 10px;">
     </a>
     <p>Advisor: Prof. Wei-Ying Ma, Prof. YanYan Lan, Institute for AI Industry Research, Tsinghua University</p>
     <p>Worked with Bowen Gao, Bo Qiang, Haichuan Tan, Yinjun Jia, Minsi Ren</p>
-    <p>DrugCLIP is a cutting-edge approach to virtual screening. It reformulates virtual screening as a dense retrieval task and employs contrastive learning to align representations of binding protein pockets and molecules from a large quantity of pairwise data without explicit binding-affinity scores.<a href="/projects/drupclip" style="color: blue;">[Read more]</a></p>
-    <table> <td style="height: 0px;"> </table>
-    <!-- <p><b>Retrieval-Augmented Drug Generation</b></p>
-    <a href="/projects/sbdd">
-      <img src="/projects/sbdd/f1.png" alt="Project Image" style="max-width: 100%; height: auto; display: block; margin: 0 auto 10px;">
-    </a>
-    Andreas Blattmann, Robin Rombach, Kaan Oktay, Jonas Müller, Björn Ommer. "Retrieval-Augmented Diffusion Models." In NeurIPS 2022.
-    <p>Advisor: Prof. Haozhou, Institute for AI Industry Research, Tsinghua University</p>
-    <p>In this project, we propose a method for Structure-Based Drug Design. We integrate a trainable decoding head (pθ(x|·)) with a visual database (D) of molecules for computational drug design. Throughout training, this approach ensures the focus on composing molecular structures from closely related examples, enhancing the model's ability to predict coherent designs. <a href="/projects/sbdd" style="color: blue;">[Read more]</a></p> -->
-    <!-- <table><tr><td style="height: 0px;"></td></tr></table> -->
-    <h3 style="text-align: left; margin-bottom: 20px;">Omics Data</h3>
-    <p><b>Capricorn: a multi-view diffusion model for Hi-C contact matrix resolution enhancement</b></p>
+    <p>Reformulated virtual screening as a massive-scale dense retrieval task. Designed a multimodal contrastive learning framework to align representations of complex biochemical structures without relying on explicit scoring labels, enabling zero-shot inference on billion-scale databases.<a href="/projects/drupclip" style="color: blue;">[Read more]</a></p>
+    <table><tr><td style="height: 0px;"></td></tr></table>
+  </div>
+
+  <!-- Capricorn -->
+  <div class="project-item GenAI-Multimodal" style="margin-bottom: 20px;">
+    <h3 style="text-align: left; margin-bottom: 20px;">Generative Models</h3>
+    <p><b>Capricorn: A Multi-View Diffusion Model for Contact Matrix Resolution Enhancement</b></p>
     <a href="/projects/capricorn">
       <img src="/projects/capricorn/f1.png" alt="Project Image" style="max-width: 100%; height: auto; display: block; margin: 0 auto 10px;">
     </a>
     <p>Advisor: Prof. William Stafford Noble and Prof. Sheng Wang, School of Computer Science & Engineering, University of Washington</p>
     <p>Worked with Tangqi Fang, Yifeng Liu, Addie Woicik</p>
-    <p>A tool for Hi-C resolution enhancement that incorporates chromatin features (like loops and TADs) as additional views of the input Hi-C contact matrix and leverages a diffusion probability model backbone to generate a high-resolution matrix. Capricorn is a powerful Hi-C resolution enhancement
-method that enables scientists to find chromatin features that cannot be identified in the low-coverage contact matrix.
-    <a href="/projects/capricorn" style="color: blue;">[Read more]</a></p>
+    <p>A multi-view conditional diffusion framework that treats high-dimensional sequence tracking as a generative resolution enhancement problem. It incorporates diverse structural priors as independent condition views into a diffusion probability backbone to reconstruct fine-grained topologies from low-coverage constraints.<a href="/projects/capricorn" style="color: blue;">[Read more]</a></p>
     <table><tr><td style="height: 0px;"></td></tr></table>
-    <p><b>A tool for the analysis of time series Hi-C</b></p>
-    <a href="/projects/hictime">
-      <img src="/projects/hictime/f1.png" alt="Project Image" style="max-width: 100%; height: auto; display: block; margin: 0 auto 10px;">
+  </div>
+  
+  <div class="project-item Info-Retrieval" style="margin-bottom: 20px;">
+    <h3 style="text-align: left; margin-bottom: 20px;">LLM Agents & Data Systems</h3>
+    <p><b>WildChat-MCP: Hierarchical Analysis Framework via Model Context Protocol</b></p>
+    <p>Advisor: Prof. Jimmy Lin, University of Waterloo</p>
+    <a href="/projects/wildchat">
+      <img src="/projects/wildchat/f1.png" alt="Project Image" style="max-width: 100%; height: auto; display: block; margin: 0 auto 10px;">
     </a>
-    <p>Advisor: Prof. William Stafford Noble and Prof. Sheng Wang, School of Computer Science & Engineering, University of Washington</p>
-    <p>Changes in spatial genome architecture over time necessitate the joint temporal analysis of Hi-C. We developed a tool for Hi-C time series to study how chromatin structure changes over time in development, the cell cycle, and disease progression. We focus on loop dynamics and discover the appearance, disappearance, and movement patterns for the Hi-C contact map.<a href="/projects/hictime" style="color: blue;">[Read more]</a></p>
+    <p>Implemented a Model Context Protocol (MCP) server enabling LLMs (Claude Desktop) to autonomously explore and analyze a 1.4M+ conversation dataset via structured tools and resources. <a href="/projects/wildchat" style="color: blue;">[Read more]</a></p>
     <table><tr><td style="height: 0px;"></td></tr></table>
-    <p><b>Multiomics Integration Via Graph Learning</b></p>
+  </div>
+
+  <!-- Glue -->
+  <div class="project-item Graph-Learning GenAI-Multimodal" style="margin-bottom: 20px;">
+    <h3 style="text-align: left; margin-bottom: 20px;">Graph Neural Networks</h3>
+    <p><b>Multiomics Integration Via Graph Representation Learning</b></p>
     <a href="/projects/glue">
       <img src="/projects/glue/f1.png" alt="Project Image" style="max-width: 100%; height: auto; display: block; margin: 0 auto 10px;">
     </a>
-    <p>Advisor: Jianyang Zeng, Tsinghua University</p>
+    <p>Advisor: Prof. Jianyang Zeng, Tsinghua University</p>
     <p>Worked with Wenda Chu, Botian Wang, Sihang Zeng, Shiyu Zhao</p>
-    <p>This project focuses on the integration of scRNA-seq and scATAC-seq data using a graph learning approach inspired by GLUE. The novelty of our method lies in decaying the weight of edges according to the distance of the ATAC peak from the TSS and using a set of independent aggregators to combine the messages in each GCN layer. Our method achieved comparative performance with GLUE on metrics and had the ability to identify more genes with regulatory relationships than GLUE. <a href="/projects/glue" style="color: blue;">[Read more]</a></p>
+    <p>Designed a heterogeneous graph representation learning approach to map disparate data modalities onto a shared latent space. Optimized message passing in GCN layers by integrating spatial distance decay weights and deploying independent aggregators, significantly improving cross-modal alignment stability.<a href="/projects/glue" style="color: blue;">[Read more]</a></p>
     <table><tr><td style="height: 0px;"></td></tr></table>
-    <p><b>PPI Network Guided Driver Target Discovery</b></p>
+  </div>
+
+  <!-- PPI -->
+  <div class="project-item Graph-Learning" style="margin-bottom: 20px;">
+    <h3 style="text-align: left; margin-bottom: 20px;">Unsupervised Learning</h3>
+    <p><b>Graph Regularization for Target Discovery</b></p>
     <a href="/projects/ppi">
       <img src="/projects/ppi/f1.png" alt="Project Image" style="max-width: 100%; height: auto; display: block; margin: 0 auto 10px;">
     </a>
-    <p>Advisor: Jianyang Zeng, Tsinghua University</p>
+    <p>Advisor: Prof. Jianyang Zeng, Tsinghua University</p>
     <p>Worked with Wenda Chu, Botian Wang, Sihang Zeng, Shiyu Zhao</p>
-    <p>We design a new method for driver target discovery using scRNA-seq data by introducing a protein-protein interaction (PPI) network to re-calulate regularization loss in the sc-ETM model and design a 2-layer MLP for target prediction. We achieved better cell clustering performance than sc-ETM and better driver target discovery performance. <a href="/projects/ppi" style="color: blue;">[Read more]</a></p>
+    <p>Enhanced Embedded Topic Models (ETM) by integrating structural interaction networks as a graph regularization prior. Developed an auxiliary NLP-based multi-layer perceptron to stabilize unsupervised clustering objectives on sparse, high-dimensional datasets.<a href="/projects/ppi" style="color: blue;">[Read more]</a></p>
+    <table><tr><td style="height: 0px;"></td></tr></table>
   </div>
-</div>
+
 
 <div class="projects-container">
   <div class="project-item Others" style="margin-bottom: 20px;">
     <table>
       <tr><td style="height: 0px;"></td></tr>
     </table>
+    <h3 style="text-align: left; margin-bottom: 20px;">Web Applications & Full Stack</h3>
+    <p><b>Venue Hub: Interactive Live Event Seating Preview Platform</b></p>
+    <a href="/projects/deepsearch">
+      <img src="/projects/deepsearch/f2.png" alt="Project Image" style="max-width: 100%; height: auto; display: block; margin: 0 auto 10px;">
+    </a>
+    <p>A full-stack web application designed to eliminate guesswork in live event ticket purchasing. Unlike major platforms that only provide artist or basic ticketing info, Venue Hub offers structured, seat-level experience data.</p>
+    <p><ul>
+      <li>Provides specialized, detailed venue blueprints and structured information.</li>
+      <li>Features an interactive platform for users to exchange and view realistic seat-level reviews.</li>
+      <li>Enables actual sightline and sound quality previews for specific seats prior to purchase, significantly enhancing transparency for buyers.</li>
+    </ul></p>
+    <p><a target="_blank" rel="noopener" href="https://main.d3rbw5kot0pnhw.amplifyapp.com/" style="color: blue;">[Website]</a></p>
+    <table><tr><td style="height: 0px;"></td></tr></table>
     <h3 style="text-align: left; margin-bottom: 20px;">AI</h3>
     <!-- <a href="/projects/gomoku">
       <img src="/projects/gomoku/f1.png" alt="Project Image" style="max-width: 100%; height: auto; display: block; margin: 0 auto 10px;"> -->

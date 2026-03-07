@@ -8,7 +8,7 @@
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>About me [ Minsi Lu ]</title>
+<title>wildchat [ Minsi Lu ]</title>
 
   <link rel="icon" href="/img/my.ico">
 
@@ -237,7 +237,7 @@
             
             
             
-            <a class="menu-link active" href="/about/"> About me</a>
+            <a class="menu-link " href="/about/"> About me</a>
           
             
             
@@ -294,34 +294,28 @@
   
 <div class="wrapper">
   <header class="header">
-    <h1 class="header-title center">About me</h1>
+    <h1 class="header-title center">wildchat</h1>
   </header>
   <main class="page-content" aria-label="Content">
       <div class="post">
-        <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: center; width: 100%;">
-    <img src="/about/minsi.jpg" alt="Minsi Lu" style="flex: 0 0 200px; max-width: 200px; border-radius: 50%;" />
-</div>
-
-
-
-<h2 id="Research-Interests"><a href="#Research-Interests" class="headerlink" title="Research Interests"></a>Research Interests</h2><p>I have some research experiences at <a target="_blank" rel="noopener" href="https://air.tsinghua.edu.cn/en/info/1046/1195.htm">Tsinghua AIR</a>, <a target="_blank" rel="noopener" href="https://homes.cs.washington.edu/~swang/">University of Washington</a>, and <a target="_blank" rel="noopener" href="https://cs.uwaterloo.ca/~mli/">University of Waterloo</a>. Based on my research experiences, my core interests include:</p>
+        <h2 id="WildChat-MCP-Hierarchical-Analysis-Framework-via-Model-Context-Protocol"><a href="#WildChat-MCP-Hierarchical-Analysis-Framework-via-Model-Context-Protocol" class="headerlink" title="WildChat-MCP: Hierarchical Analysis Framework via Model Context Protocol"></a>WildChat-MCP: Hierarchical Analysis Framework via Model Context Protocol</h2><p><img src="/f1.png" alt="WildChat-MCP Framework"><br><em>(Note: Please insert the actual project architecture image as <code>f1.png</code> in the <code>source/projects/wildchat</code> folder.)</em></p>
+<p><strong>Advisor</strong>: Prof. Jimmy Lin, University of Waterloo<br><strong>Duration</strong>: Sep. 2025 - Dec. 2025<br><strong>Code Repository</strong>: <a target="_blank" rel="noopener" href="https://github.com/minsilu/WildChat-MCP">https://github.com/minsilu/WildChat-MCP</a></p>
+<h3 id="1-Abstract"><a href="#1-Abstract" class="headerlink" title="1. Abstract"></a>1. Abstract</h3><p>Large Language Models (LLMs) have demonstrated profound capabilities in reasoning and tool-use, but their application to large-scale, unstructured exploratory semantic datasets is bottlenecked by context windows and rigid interaction paradigms. In this project, we architected <strong>WildChat-MCP</strong>, a complex data-engineering and hierarchical autonomous agent framework via the Model Context Protocol (MCP). It enables an LLM (Claude Desktop) to act as a fully autonomous data analyst, exploring, indexing, and interpreting a massive dataset of over 1.4 million real-world user-assistant interaction logs contextually.</p>
+<h3 id="2-Core-Methodologies-and-Contributions"><a href="#2-Core-Methodologies-and-Contributions" class="headerlink" title="2. Core Methodologies and Contributions"></a>2. Core Methodologies and Contributions</h3><h4 id="2-1-Full-Stack-ETL-and-Data-Engineering-Pipeline"><a href="#2-1-Full-Stack-ETL-and-Data-Engineering-Pipeline" class="headerlink" title="2.1 Full-Stack ETL and Data Engineering Pipeline"></a>2.1 Full-Stack ETL and Data Engineering Pipeline</h4><p>Handling million-scale conversational datasets requires rigorous data engineering. We built a robust Extract, Transform, Load (ETL) pipeline using modern data stack principles:</p>
 <ul>
-<li><strong>Multimodal Learning &amp; Representation:</strong> Contrastive learning frameworks, self-supervised representation learning, and cross-modal alignment.</li>
-<li><strong>Advanced Information Retrieval:</strong> Vector database optimization, and approximate nearest neighbor (ANN) search algorithms.</li>
-<li><strong>Generative AI &amp; LLMs:</strong> Diffusion models, Model fine-tuning (PEFT, LoRA), RAG (Retrieval-Augmented Generation) architectures, and inference optimization.</li>
-<li><strong>AI for Science (AI4Science):</strong> Deep learning for computational biology, including structure-based drug design (SBDD).</li>
+<li><strong>HuggingFace Streaming to DuckDB</strong>: Implemented a streaming ingester directly from HuggingFace datasets into partitioned DuckDB architectures, bypassing excessive memory overheads.</li>
+<li><strong>Hybrid Topic Modeling &amp; Clustering</strong>: Employed embedding-based k-means clustering strategies alongside a localized LLM (Qwen 7B) to autonomously generate high-fidelity cluster labels characterizing user intents.</li>
+<li><strong>High-Performance Database Indexing</strong>: Optimized large-scale analytical updates utilizing DuckDB’s <code>CTAS</code> (Create Table As Select) mechanisms. The database was subsequently indexed with a hybrid B-Tree and BM25 Full-Text Search (FTS) schema to ensure low-latency analytical retrievals during agent execution.</li>
 </ul>
-<h2 id="Research-Experiences"><a href="#Research-Experiences" class="headerlink" title="Research Experiences"></a>Research Experiences</h2><h3 id="Contrastive-Protein-Molecule-Representation-Learning-for-Virtual-Screening"><a href="#Contrastive-Protein-Molecule-Representation-Learning-for-Virtual-Screening" class="headerlink" title="Contrastive Protein-Molecule Representation Learning for Virtual Screening"></a><a href="/projects/drupclip">Contrastive Protein-Molecule Representation Learning for Virtual Screening</a></h3><p>Intern, Institute for AI Industry Research, Tsinghua University  <br>Advisor: Prof. <a target="_blank" rel="noopener" href="https://air.tsinghua.edu.cn/en/info/1046/1195.htm">YanYan Lan</a>, Feb. 2023 - Jun. 2023</p>
-<h3 id="Index-Optimization-of-DeepSearch-for-Mass-Spectrometry-Peptide-Database-Retrieval"><a href="#Index-Optimization-of-DeepSearch-for-Mass-Spectrometry-Peptide-Database-Retrieval" class="headerlink" title="Index Optimization of DeepSearch for Mass Spectrometry Peptide Database Retrieval"></a><a href="/projects/deepsearch">Index Optimization of DeepSearch for Mass Spectrometry Peptide Database Retrieval</a></h3><p>Intern, Cheriton School of Computer Science, University of Waterloo  <br>Advisor: Prof. <a target="_blank" rel="noopener" href="https://cs.uwaterloo.ca/~mli/">Ming Li</a>, Feb. 2025 - Sep. 2025</p>
-<h3 id="Resolution-Enhancement-and-Time-Dimension-Modeling-for-Hi-C-Data"><a href="#Resolution-Enhancement-and-Time-Dimension-Modeling-for-Hi-C-Data" class="headerlink" title="Resolution Enhancement and Time Dimension Modeling for Hi-C Data"></a><a href="/projects/capricorn">Resolution Enhancement and Time Dimension Modeling for Hi-C Data</a></h3><p>Visiting Student, School of Computer Science &amp; Engineering, University of Washington  <br>Advisor: Prof. <a target="_blank" rel="noopener" href="https://noble.gs.washington.edu/~wnoble/">William Stafford Noble</a>, Prof. <a target="_blank" rel="noopener" href="https://homes.cs.washington.edu/~swang/">Sheng Wang</a>, Jun. 2023 - Oct. 2023</p>
-<h2 id="Skills"><a href="#Skills" class="headerlink" title="Skills"></a>Skills</h2><ul>
-<li><strong>Programming Languages:</strong> Python, C&#x2F;C++, Java, SQL, R, Bash.</li>
-<li><strong>Machine Learning &amp; AI:</strong> PyTorch, TensorFlow, HuggingFace Transformers, Scikit-Learn.</li>
-<li><strong>Systems &amp; Tools:</strong> Linux&#x2F;Unix, Git, Docker, Kubernetes, AWS, CI&#x2F;CD pipelines.</li>
-<li><strong>Databases &amp; IR:</strong> Vector Databases (Milvus, FAISS), Graph Databases, PostgreSQL.</li>
-<li><strong>Core Knowledge:</strong> Data Structures &amp; Algorithms, Distributed Systems, Linear Algebra, Probability &amp; Statistics, Computer Architecture, Computer Networks, Database Systems.</li>
-<li><strong>Domain Expertise:</strong> Computational Biology, Bioinformatics, Cheminformatics.</li>
+<h4 id="2-2-Hierarchical-Agent-Tool-Stack-Architecture"><a href="#2-2-Hierarchical-Agent-Tool-Stack-Architecture" class="headerlink" title="2.2 Hierarchical Agent Tool Stack Architecture"></a>2.2 Hierarchical Agent Tool Stack Architecture</h4><p>To overcome the contextual limitations of LLMs when interacting with massive databases, we designed a tiered, hierarchical tool access pattern—dubbed the <strong>“Meta → Macro → Discovery → Micro”</strong> architecture using the Model Context Protocol:</p>
+<ul>
+<li><strong>Meta Level:</strong> Tools enabling the agent to understand the database schema, available metrics, and data dictionaries.</li>
+<li><strong>Macro Level:</strong> Tools executing pre-computed aggregate queries (e.g., temporal trends, cluster distributions).</li>
+<li><strong>Discovery Level:</strong> Tools utilizing BM25 FTS and semantic search to iteratively filter and sample relevant dialogue cohorts based on hypothesized patterns.</li>
+<li><strong>Micro Level:</strong> Safe, read-only tools allowing the agent to inspect the granular turns of specific conversational sessions.</li>
 </ul>
+<h4 id="2-3-Safety-Sandboxed-Execution-Environment"><a href="#2-3-Safety-Sandboxed-Execution-Environment" class="headerlink" title="2.3 Safety-Sandboxed Execution Environment"></a>2.3 Safety-Sandboxed Execution Environment</h4><p>Autonomous agents generating and executing SQL queries present significant integrity risks. To mitigate this, the MCP server enforces a strict safety-sandboxed read-only SQL execution environment, rigorously validating and sanitizing dynamically generated analysis queries before execution against the core DuckDB instance.</p>
+<h3 id="3-Conclusion"><a href="#3-Conclusion" class="headerlink" title="3. Conclusion"></a>3. Conclusion</h3><p>WildChat-MCP represents a forward-looking implementation of AI-driven data analytics. By standardizing the interfaces via MCP and backing the LLM with a robust, highly-indexed columnar data store (DuckDB), we transformed a static, million-row conversational dataset into an interactive, dynamically explorable knowledge graph driven purely by natural language hypothesis generation and autonomous tool orchestration.</p>
 
        </div>
          <div class="dis">
