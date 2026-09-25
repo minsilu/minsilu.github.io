@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import './styles.css';
 
-const routes = ['about', 'publications', 'projects'];
+const routes = ['about', 'publications', 'teaching', 'projects'];
 const external = { target: '_blank', rel: 'noopener noreferrer' };
+const projectContent = import.meta.glob('./project-content/*.html', { eager: true, query: '?raw', import: 'default' });
 
 const publications = [
   {
@@ -22,6 +23,7 @@ const publications = [
 
 const projects = [
   {
+    slug: 'deepsearch',
     area: 'Information retrieval',
     title: 'Adaptive vector search for mass spectrometry',
     description: 'A biology-informed approximate nearest neighbor system for peptide identification, combining mass-aware storage with graph search. The original project reports a 13× speedup over MSFragger at a 500 Da tolerance.',
@@ -29,6 +31,7 @@ const projects = [
     imageAlt: 'DeepSearch system diagram'
   },
   {
+    slug: 'drupclip',
     area: 'Representation learning',
     title: 'DrugCLIP',
     description: 'Contrastive protein–molecule representations that frame virtual screening as large-scale retrieval and support zero-shot search.',
@@ -38,6 +41,7 @@ const projects = [
     linkLabel: 'Paper'
   },
   {
+    slug: 'capricorn',
     area: 'Generative models',
     title: 'Capricorn',
     description: 'A multi-view diffusion model that enhances low-resolution Hi-C contact matrices to help detect chromatin loops.',
@@ -47,6 +51,7 @@ const projects = [
     linkLabel: 'Paper'
   },
   {
+    slug: 'wildchat',
     area: 'LLM systems',
     title: 'WildChat-MCP',
     description: 'An MCP-based analysis framework for exploring more than 1.4 million conversations through structured, read-only tools.',
@@ -56,6 +61,7 @@ const projects = [
     linkLabel: 'Code'
   },
   {
+    slug: 'glue',
     area: 'Graph learning',
     title: 'Multiomics integration',
     description: 'Graph representation learning that brings distinct biological data modalities into a shared latent space.',
@@ -63,17 +69,42 @@ const projects = [
     imageAlt: 'Multiomics graph learning diagram'
   },
   {
+    slug: 'ppi',
     area: 'Graph learning',
     title: 'Graph regularization for target discovery',
     description: 'Structural interaction networks used as a graph regularization prior for unsupervised target discovery.',
     image: '/project-images/ppi.png',
     imageAlt: 'Graph regularization diagram'
+  },
+  {
+    slug: 'gomo',
+    area: 'AI search',
+    title: 'Gomoku Genius',
+    description: 'A study of minimax, alpha-beta pruning, truncated search, and Monte Carlo tree search for classic board games.'
+  },
+  {
+    slug: 'twitter',
+    area: 'Machine learning',
+    title: 'Twitter sentiment classification',
+    description: 'A comparison of classical machine learning models, ResNet, and BERT for four-way sentiment classification.',
+    image: '/projects/twitter/f1.png',
+    imageAlt: 'Sentiment model results'
   }
 ];
 
+const earlierProjects = [
+  { slug: 'hictime', title: 'Time-series Hi-C analysis' },
+  { slug: 'antibody', title: 'HER2 and CXCR4 bispecific antibodies' },
+  { slug: 'crispr', title: 'Genome-wide CRISPR screening' }
+];
+
+const detailTitles = Object.fromEntries([...projects, ...earlierProjects].map(({ slug, title }) => [slug, title]));
+
 function getRoute() {
-  const route = window.location.hash.replace(/^#\/?/, '').split('/')[0].toLowerCase();
-  return routes.includes(route) ? route : 'about';
+  const route = window.location.hash.replace(/^#\/?/, '').replace(/\/$/, '').toLowerCase();
+  if (routes.includes(route)) return route;
+  const match = /^projects\/([a-z0-9-]+)$/.exec(route);
+  return match && projectContent[`./project-content/${match[1]}.html`] ? route : 'about';
 }
 
 function Icon({ name }) {
@@ -90,19 +121,21 @@ function Icon({ name }) {
 }
 
 function Profile() {
-  return <aside className="profile" aria-label="Profile">
-    <img className="portrait" src="/portrait.jpg" alt="Minsi Lu" />
-    <h2>Minsi Lu</h2>
-    <p className="profile-summary">AI · <a href="https://scholar.google.com/citations?view_op=search_authors&hl=en&mauthors=label:software_performance" {...external}>Software Performance</a> · <a href="https://scholar.google.com/citations?view_op=search_authors&hl=en&mauthors=label:ai_agent" {...external}>AI Agent</a> · <a href="https://scholar.google.com/citations?view_op=search_authors&hl=en&mauthors=label:machine_learning" {...external}>Machine Learning</a></p>
-    <ul className="profile-links">
-      <li><Icon name="pin" /><span>Waterloo, Ontario</span></li>
-      <li><Icon name="school" /><span>University of Waterloo</span></li>
-      <li><Icon name="mail" /><a href="mailto:minsilu0330@gmail.com">Email</a></li>
-      <li><Icon name="link" /><a href="https://scholar.google.com/citations?user=KBhKa_4AAAAJ" {...external}>Google Scholar</a></li>
-      <li><Icon name="link" /><a href="https://github.com/minsilu" {...external}>GitHub</a></li>
-      <li><Icon name="link" /><a href="https://linkedin.com/in/minsi-lu-72957b263" {...external}>LinkedIn</a></li>
-    </ul>
-  </aside>;
+  return <section className="profile-hero" aria-label="Profile">
+    <div className="profile-copy">
+      <p className="profile-kicker">University of Waterloo · Waterloo, Ontario</p>
+      <p className="profile-name">Minsi Lu</p>
+      <p className="profile-role">PhD student in Electrical and Computer Engineering</p>
+      <p className="profile-summary">AI · <a href="https://scholar.google.com/citations?view_op=search_authors&hl=en&mauthors=label:software_performance" {...external}>Software Performance</a> · <a href="https://scholar.google.com/citations?view_op=search_authors&hl=en&mauthors=label:ai_agent" {...external}>AI Agent</a> · <a href="https://scholar.google.com/citations?view_op=search_authors&hl=en&mauthors=label:machine_learning" {...external}>Machine Learning</a></p>
+      <ul className="profile-links">
+        <li><Icon name="mail" /><a href="mailto:minsilu0330@gmail.com">Email</a></li>
+        <li><Icon name="link" /><a href="https://scholar.google.com/citations?user=KBhKa_4AAAAJ" {...external}>Google Scholar</a></li>
+        <li><Icon name="link" /><a href="https://github.com/minsilu" {...external}>GitHub</a></li>
+        <li><Icon name="link" /><a href="https://linkedin.com/in/minsi-lu-72957b263" {...external}>LinkedIn</a></li>
+      </ul>
+    </div>
+    <div className="portrait-panel"><img className="portrait" src="/portrait.jpg" alt="Minsi Lu" /></div>
+  </section>;
 }
 
 function About() {
@@ -126,8 +159,20 @@ function About() {
       <div><span className="date">2023</span><p><strong>University of Washington</strong><br />Hi-C resolution enhancement with Prof. <a href="https://noble.gs.washington.edu/~wnoble/" {...external}>William Stafford Noble</a> and Prof. <a href="https://homes.cs.washington.edu/~swang/" {...external}>Sheng Wang</a>.</p></div>
       <div><span className="date">2023</span><p><strong>Tsinghua AIR</strong><br />Protein–molecule representation learning with Prof. <a href="https://air.tsinghua.edu.cn/en/info/1046/1195.htm" {...external}>Yanyan Lan</a>.</p></div>
     </div>
-    <p className="next-links"><a href="#/publications">Publications <Icon name="arrow" /></a><a href="#/projects">Projects <Icon name="arrow" /></a><a href="/cv/mycv.pdf" target="_blank" rel="noopener noreferrer">CV (PDF) <Icon name="arrow" /></a></p>
+    <p className="next-links"><a href="#/publications">Publications <Icon name="arrow" /></a><a href="#/teaching">Teaching <Icon name="arrow" /></a><a href="#/projects">Projects <Icon name="arrow" /></a><a href="/cv/mycv.pdf" target="_blank" rel="noopener noreferrer">CV (PDF) <Icon name="arrow" /></a></p>
   </article>;
+}
+
+function Teaching() {
+  return <section className="content teaching-page">
+    <p className="eyebrow">Teaching</p>
+    <h1>Teaching</h1>
+    <article className="teaching-item">
+      <span className="venue">Fall 2025 · University of Waterloo</span>
+      <h2>MTE 241</h2>
+      <p>Teaching Assistant</p>
+    </article>
+  </section>;
 }
 
 function Publications() {
@@ -149,12 +194,43 @@ function Projects() {
     <p className="eyebrow">Selected work</p>
     <h1>Projects</h1>
     <p className="section-intro">A focused selection of research projects across retrieval, multimodal learning, and computational biology.</p>
-    <div className="project-grid">{projects.map((project) => <article className="project-card" key={project.title}>
-      <img src={project.image} alt={project.imageAlt} loading="lazy" />
-      <div className="project-copy"><span className="venue">{project.area}</span><h2>{project.title}</h2><p>{project.description}</p>
+    <div className="project-grid">{projects.map((project) => <article className={`project-card${project.image ? '' : ' project-card--text'}`} key={project.title}>
+      {project.image && <a className="project-image-link" href={`#/projects/${project.slug}`} aria-label={`Read about ${project.title}`}><img src={project.image} alt={project.imageAlt} loading="lazy" /></a>}
+      <div className="project-copy"><span className="venue">{project.area}</span><h2><a href={`#/projects/${project.slug}`}>{project.title}</a></h2><p>{project.description}</p>
+      <a className="text-link" href={`#/projects/${project.slug}`}>Read more <Icon name="arrow" /></a>
       {project.link && <a className="text-link" href={project.link} {...external}>{project.linkLabel} <Icon name="arrow" /></a>}</div>
     </article>)}</div>
+    <div className="earlier-work"><h2>Earlier work</h2><ul>{earlierProjects.map((project) => <li key={project.slug}><a href={`#/projects/${project.slug}`}>{project.title}</a></li>)}</ul><p><a href="https://main.d3rbw5kot0pnhw.amplifyapp.com/" {...external}>Venue Hub website</a></p></div>
   </section>;
+}
+
+function ProjectDetail({ slug }) {
+  const articleRef = useRef(null);
+  const title = detailTitles[slug] || slug;
+  const html = projectContent[`./project-content/${slug}.html`];
+  useEffect(() => {
+    if (!articleRef.current || !html?.includes('$')) return;
+    const article = articleRef.current;
+    let cancelled = false;
+    Promise.all([import('katex/contrib/auto-render'), import('katex/dist/katex.min.css')]).then(([module]) => {
+      if (cancelled || !article.isConnected) return;
+      module.default(article, {
+        delimiters: [
+          { left: '$$', right: '$$', display: true },
+          { left: '$', right: '$', display: false },
+          { left: '\\(', right: '\\)', display: false }
+        ],
+        throwOnError: false
+      });
+    });
+    return () => { cancelled = true; };
+  }, [html]);
+  return <article className="content project-detail">
+    <a className="back-link" href="#/projects">← All projects</a>
+    <p className="eyebrow">Project</p>
+    <h1>{title}</h1>
+    <div className="legacy-article" ref={articleRef} dangerouslySetInnerHTML={{ __html: html }} />
+  </article>;
 }
 
 function App() {
@@ -171,7 +247,8 @@ function App() {
     localStorage.setItem('theme', theme);
   }, [theme]);
   useEffect(() => {
-    document.title = `${route[0].toUpperCase()}${route.slice(1)} | Minsi Lu`;
+    const page = route.startsWith('projects/') ? detailTitles[route.split('/')[1]] : route[0].toUpperCase() + route.slice(1);
+    document.title = `${page} | Minsi Lu`;
     requestAnimationFrame(() => window.scrollTo(0, 0));
   }, [route]);
 
@@ -181,12 +258,13 @@ function App() {
       <nav aria-label="Main navigation">
         <a href="#/about" aria-current={route === 'about' ? 'page' : undefined}>About</a>
         <a href="#/publications" aria-current={route === 'publications' ? 'page' : undefined}>Publications</a>
-        <a href="#/projects" aria-current={route === 'projects' ? 'page' : undefined}>Projects</a>
+        <a href="#/projects" aria-current={route.startsWith('projects') ? 'page' : undefined}>Projects</a>
+        <a href="#/teaching" aria-current={route === 'teaching' ? 'page' : undefined}>Teaching</a>
         <a href="/cv/mycv.pdf" target="_blank" rel="noopener noreferrer">CV</a>
       </nav>
       <button className="theme-toggle" type="button" onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')} aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} theme`} title={`Switch to ${theme === 'light' ? 'dark' : 'light'} theme`}><Icon name={theme === 'light' ? 'moon' : 'sun'} /></button>
     </div></header>
-    <div className="layout"><Profile /><main id="main-content">{route === 'about' ? <About /> : route === 'publications' ? <Publications /> : <Projects />}</main></div>
+    <div className="layout"><Profile /><main id="main-content">{route === 'about' ? <About /> : route === 'publications' ? <Publications /> : route === 'teaching' ? <Teaching /> : route === 'projects' ? <Projects /> : <ProjectDetail slug={route.split('/')[1]} />}</main></div>
     <footer className="site-footer"><div>© {new Date().getFullYear()} Minsi Lu</div><div><a href="mailto:minsilu0330@gmail.com">Email</a><span aria-hidden="true">·</span><a href="https://github.com/minsilu" {...external}>GitHub</a></div></footer>
   </div>;
 }

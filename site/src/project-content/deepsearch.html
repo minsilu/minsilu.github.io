@@ -1,0 +1,47 @@
+<h2 id="Overview">Overview</h2><p>Tandem mass spectrometry (MS&#x2F;MS) is the cornerstone of modern proteomics, enabling large-scale protein identification through peptide-spectrum matching. Open search strategies, which allow for arbitrary post-translational modifications (PTMs) by searching with wide precursor mass tolerance windows (±500 Da), face severe computational challenges due to the combinatorial explosion of candidate peptides. </p>
+<p>We present a novel biology-informed hybrid search engine that combines adaptive approximate nearest neighbor (ANN) search with domain-specific optimizations for high-dimensional vector similarity search under mass range constraints. </p>
+<h2 id="The-Open-Search-Challenge">The Open Search Challenge</h2><p>Traditional database search strategies assume that peptides exist in their canonical, unmodified forms. However, post-translational modifications (PTMs) such as phosphorylation, acetylation, and oxidation are ubiquitous in biological systems and alter peptide masses. <strong>Open search</strong> addresses this by allowing large precursor mass tolerance windows (typically ±500 Da), enabling the discovery of unknown or unexpected modifications without prior specification.</p>
+<p>This generality comes at a steep computational cost. The number of candidates explodes as the mass tolerance window $\Delta$ increases, creating a severe computational bottleneck when combined with high-dimensional vector similarities computation.</p>
+<p>We formulate the peptide identification problem as a <strong>range-filtering approximate nearest neighbor search (RF-ANNS)</strong>:</p>
+<p>$$ \mathcal{R}(q, \Delta, k) &#x3D; \underset{p \in \mathcal{F}(q, \Delta)}{\arg\max_k} \text{sim}(\mathbf{v}_q, \mathbf{v}_p) $$</p>
+<p>where:</p>
+<ul>
+<li>$\mathcal{F}(q, \Delta) &#x3D; {p \in \mathcal{D} : |m_p - m_q| \leq \Delta}$ is the mass filter</li>
+<li>$\text{sim}(\cdot, \cdot)$ measures cosine similarity between spectrum and peptide($p$) embeddings</li>
+<li>$k$ is the number of top candidates to retrieve</li>
+</ul>
+<p>This formulation reveals a fundamental tension: low-selectivity queries require efficient filtering, while high-selectivity queries demand fast similarity computation.</p>
+<h2 id="Contributions">Contributions</h2><p>Our system introduces three key innovations:</p>
+<ol>
+<li><strong>Biology-Informed Data Layout</strong>: A columnar storage format sorted by precursor mass that reduces range query complexity from $O(|\mathcal{D}|)$ hash lookups to $O(\log |\mathcal{D}| + |\mathcal{F}|)$ via binary search, with superior I&#x2F;O efficiency.</li>
+<li><strong>Rescue-HNSW Algorithm</strong>: An adaptive ANN search strategy that maintains graph connectivity in pre-filtered scenarios by injecting mass-proximate neighbors, addressing the “connectivity crisis” in filtered graph traversal.</li>
+<li><strong>Selectivity-Adaptive Execution</strong>: A dynamic query optimizer that switches between post-filtering HNSW, and pre-filtering Rescue-HNSW based on estimated selectivity.</li>
+</ol>
+<h2 id="Methodology">Methodology</h2><h3 id="System-Architecture">System Architecture</h3><p>Our system comprises three tightly integrated layers designed for selectivity-adaptive query processing:</p>
+<ol>
+<li><strong>Storage Layer:</strong> Columnar database with peptides sorted by precursor mass, enabling $O(\log N)$ binary search for range filtering. Embeddings are stored in memory-mapped arrays for sequential access.</li>
+<li><strong>Index Layer:</strong> HNSW graph augmented with mass-aware neighbor lists. Each node maintains both semantic neighbors and mass neighbors, ensuring connectivity at low selectivity.</li>
+<li><strong>Query Engine:</strong> Adaptive executor that routes queries to one of three strategies based on estimated selectivity.</li>
+</ol>
+<h3 id="Biology-Informed-Hybrid-Graph-Rescue-HNSW">Biology-Informed Hybrid Graph &amp; Rescue-HNSW</h3><p>Pre-filtering creates a subgraph induced by valid mass nodes. However, this subgraph may be disconnected when selectivity is low, causing graph search to get trapped in local neighborhoods. </p>
+<p>Our key insight: <strong>mass proximity implies potential semantic relevance in proteomics</strong>. To preserve connectivity while enabling efficient filtering, we augment each node with a second neighbor list:</p>
+<ul>
+<li><strong>Semantic neighbors</strong> ($M &#x3D; 32$): Standard HNSW edges to the closest nodes in embedding space.</li>
+<li><strong>Mass neighbors</strong> ($M’ &#x3D; 32$): Edges to nodes that are within a narrow mass window ($\pm 20$ ppm) and close in embedding space.</li>
+</ul>
+<p>During the <strong>Rescue-HNSW</strong> algorithm, we dynamically inject these mass neighbors to maintain network connectivity:</p>
+<h3 id="Adaptive-Query-Execution">Adaptive Query Execution</h3><p>Our query optimizer estimates selectivity $\hat{\sigma}$ exactly at query time via binary search, and routes queries to one of three strategies based on empirically-determined thresholds:</p>
+<ol>
+<li><strong>Brute-Force GPU or Hybrid Graph Traversal (Rescue-HNSW)</strong> ($\hat{\sigma} &lt; \tau_1$): Handle extremely small candidate sets.</li>
+<li><strong>Hybrid Graph Traversal</strong> ($\tau_1 \leq \hat{\sigma} \leq \tau_2$): Apply pre-filtering with mass-aware rescue (Rescue-HNSW).</li>
+<li><strong>Adaptive Post-Filtering</strong> ($\hat{\sigma} &gt; \tau_2$): Search full index with adaptive $k$-doubling.</li>
+</ol>
+<h2 id="Experimental-Results">Experimental Results</h2><p>On a standard proteomics dataset (HEK293, 37,131 spectra against 4.87M peptides), our approach demonstrates significant improvements:</p>
+<h3 id="Query-Throughput">Query Throughput</h3><p>Our system achieves up to <strong>13× speedup</strong> over state-of-the-art tools like MSFragger. We maintain ~2,000 queries per second (QPS) even with extreme 500 Da tolerance windows.</p>
+<p><img src="/projects/deepsearch/plot_qps_tolerance.png" alt="Query Throughput vs. Tolerance"></p>
+<p><img src="/projects/deepsearch/plot_qps_selectivity.png" alt="Query Throughput vs. Selectivity"></p>
+<p>At large mass windows (1-100 Da and beyond), HNSW-v2 (Rescue-HNSW) clearly dominates the performance landscape by effectively balancing pre-filtering benefits against the cost of maintaining graph connectivity.</p>
+<h3 id="Identification-Rate">Identification Rate</h3><p>We maintain a competitive identification rate under strict 1% FDR control. </p>
+<p><img src="/projects/deepsearch/plot_id_rate_tolerance.png" alt="Identification Rate"> </p>
+<p>While post-filtering achieves higher recall due to a complete graph, HNSW-v2 offers a compelling balance of identification rate and extreme speed, making interactive open-search workflows viable.</p>
+<h2 id="Conclusion">Conclusion</h2><p>By exploiting the physical constraint of precursor mass through columnar storage, and introducing Rescue-HNSW to preserve graph connectivity under aggressive filtering, we transform open search from a time-intensive batch operation into an interactive analytical tool. Our system demonstrates exactly how principled integration of biological constraints with modern ANN algorithms can accelerate real-world scientific discovery.</p>
