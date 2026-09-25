@@ -42,7 +42,7 @@ const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/katex-Y--T_F3K.
 <h4 id="Diffusion-Model-Backbone"><strong>Diffusion Model Backbone</strong>:</h4><p>Capricorn leverages conditional diffusion probability models, treating the combined contact matrix and its derived chromatin feature views as a multi-channel image. We use the conditional diffusion probability model <a target="_blank" rel="noopener" href="https://imagen.research.google/">Imagen</a> as the resolution enhancement backbone model, updating the model to condition on low-coverage contact matrices rather than text. </p>
 <h4 id="Training-and-Inference"><strong>Training and Inference</strong></h4><p>During training, Capricorn learns to predict high-resolution contact matrices from their low-resolution counterparts and additional chromatin features. The objective is to minimize the <strong>Mean Squared Error (MSE)</strong> between the predicted matrices $ \\hat{Y} $ and the ground truth high-resolution matrices $ Y $</p>
 <p>During inference, Capricorn utilizes the trained diffusion model backbone along with the low-coverage contact matrix views to generate a high-coverage contact matrix estimate $ \\hat{Y} $:</p>
-<p>$$<br>\\hat{Y} &#x3D; f_\\theta(\\theta; \\tilde{X}(X))<br>$$</p>
+<p>$$\\hat{Y} &#x3D; f_\\theta(\\theta; \\tilde{X}(X))$$</p>
 <p><img src="/projects/capricorn/f1.png" alt="Training Procedure"></p>
 <h3 id="Performance-Measures">Performance Measures</h3><p>Capricorn’s performance is evaluated using both image-based and biologically motivated metrics. The model’s predicted high-coverage contact matrix is compared against the true high-coverage matrix using <strong>mean squared error (MSE)</strong> and <strong>loop F1 score</strong>.</p>
 <p> The loop F1 score is calculated based on the number of correctly predicted loops, with a tolerance for positional discrepancies, to assess the model’s ability to accurately capture biologically relevant chromatin structures.</p>
@@ -153,7 +153,7 @@ const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/katex-Y--T_F3K.
 <!-- Q:what is the difference bt it andt he cos sim? -->
 
 <p>Pocket-to-Mol loss function:</p>
-<p>$$<br>L_{pk}(x_{pk}, {x_{mi}}^N_{i&#x3D;1}) &#x3D; -\\frac{1}{N} \\log \\frac{\\exp(s(x_{pk}, x_{mk})&#x2F;\\tau)}{\\sum^N_{i&#x3D;1} \\exp(s(x_{pk}, x_{mi})&#x2F;\\tau)}<br>$$</p>
+<p>$$L_{pk}(x_{pk}, {x_{mi}}^N_{i&#x3D;1}) &#x3D; -\\frac{1}{N} \\log \\frac{\\exp(s(x_{pk}, x_{mk})&#x2F;\\tau)}{\\sum^N_{i&#x3D;1} \\exp(s(x_{pk}, x_{mi})&#x2F;\\tau)}$$</p>
 <!-- \\[L_{mk}(x_{mk}, \\{x_{pi}\\}^N_{i=1}) = -\\frac{1}{N} \\log \\frac{\\exp(s(x_{pk}, x_{mk})/\\tau)}{\\sum^N_{i=1} \\exp(s(x_{pi}, x_{mk})/\\tau)}\\] -->
 
 <ul>
