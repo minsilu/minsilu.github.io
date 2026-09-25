@@ -28,6 +28,8 @@ button { font: inherit; }
 .portrait { display: block; width: 178px; height: 178px; border-radius: 50%; object-fit: cover; object-position: center 31%; border: 1px solid #d9dee2; padding: 4px; }
 .profile h2 { font-size: 1.22rem; line-height: 1.25; margin: 18px 0 8px; letter-spacing: -.02em; }
 .profile-summary { line-height: 1.5; margin: 0 0 22px; color: #57636c; }
+.profile-summary a { color: inherit; text-decoration-color: #a9bbc5; white-space: nowrap; }
+.profile-summary a:hover { color: #287ca5; }
 .profile-links { padding: 0; margin: 0; list-style: none; display: grid; gap: 11px; }
 .profile-links li { display: flex; gap: 10px; align-items: center; line-height: 1.35; color: #53616a; }
 .profile-links svg { flex: 0 0 17px; width: 17px; height: 17px; color: #76828a; }

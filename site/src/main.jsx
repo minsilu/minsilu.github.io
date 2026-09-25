@@ -93,7 +93,7 @@ function Profile() {
   return <aside className="profile" aria-label="Profile">
     <img className="portrait" src="/portrait.jpg" alt="Minsi Lu" />
     <h2>Minsi Lu</h2>
-    <p className="profile-summary">Machine learning, information retrieval, and AI for science.</p>
+    <p className="profile-summary">AI · <a href="https://scholar.google.com/citations?view_op=search_authors&hl=en&mauthors=label:software_performance" {...external}>Software Performance</a> · <a href="https://scholar.google.com/citations?view_op=search_authors&hl=en&mauthors=label:ai_agent" {...external}>AI Agent</a> · <a href="https://scholar.google.com/citations?view_op=search_authors&hl=en&mauthors=label:machine_learning" {...external}>Machine Learning</a></p>
     <ul className="profile-links">
       <li><Icon name="pin" /><span>Waterloo, Ontario</span></li>
       <li><Icon name="school" /><span>University of Waterloo</span></li>
@@ -108,20 +108,23 @@ function Profile() {
 function About() {
   return <article className="content prose">
     <p className="eyebrow">About</p>
-    <h1>Research at the intersection of AI and science</h1>
-    <p>Hello! I’m Minsi Lu. I study machine learning methods for information retrieval and computational biology. My work spans multimodal representation learning, generative models, and efficient vector search.</p>
-    <p>I am a master’s student in Electrical and Computer Engineering at the <a href="https://uwaterloo.ca/" {...external}>University of Waterloo</a>. My research experience includes the <a href="https://air.tsinghua.edu.cn/en/info/1046/1195.htm" {...external}>Institute for AI Industry Research at Tsinghua University</a>, the <a href="https://www.washington.edu/" {...external}>University of Washington</a>, and the University of Waterloo.</p>
+    <h1>AI for software quality and performance</h1>
+    <p>Hello! I’m Minsi Lu. I study the quality, performance, and energy consumption of AI-generated software, as well as AI agents and machine learning.</p>
+    <p>I am a PhD student in Electrical and Computer Engineering at the <a href="https://uwaterloo.ca/" {...external}>University of Waterloo</a>, advised by Prof. <a href="https://ece.uwaterloo.ca/~wshang/" {...external}>Weiyi Shang</a>.</p>
+    <p>I am also a research intern at <a href="https://www.era-environmental.com/" {...external}>ERA Environmental Software Solutions</a>, where I work on automated test generation.</p>
     <h2>Research interests</h2>
     <ul>
-      <li><strong>Multimodal learning:</strong> contrastive learning and cross-modal representation alignment.</li>
-      <li><strong>Information retrieval:</strong> vector search, approximate nearest neighbors, and retrieval systems.</li>
-      <li><strong>AI for science:</strong> machine learning for molecular discovery and genomics.</li>
+      <li>Quality, performance, and energy consumption of AI-generated software.</li>
+      <li>AI agents.</li>
+      <li>Machine learning.</li>
     </ul>
     <h2>Research experience</h2>
     <div className="experience">
-      <div><span className="date">2025</span><p><strong>University of Waterloo</strong><br />Index optimization for DeepSearch under the supervision of Prof. Ming Li.</p></div>
-      <div><span className="date">2023</span><p><strong>University of Washington</strong><br />Hi-C resolution enhancement with Prof. William Stafford Noble and Prof. Sheng Wang.</p></div>
-      <div><span className="date">2023</span><p><strong>Tsinghua AIR</strong><br />Protein–molecule representation learning with Prof. Yanyan Lan.</p></div>
+      <div><span className="date">Current</span><p><strong>University of Waterloo</strong><br />PhD research with Prof. <a href="https://ece.uwaterloo.ca/~wshang/" {...external}>Weiyi Shang</a> on AI-generated software and software performance.</p></div>
+      <div><span className="date">Current</span><p><strong><a href="https://www.era-environmental.com/" {...external}>ERA Environmental Software Solutions</a></strong><br />Research internship focused on automated test generation.</p></div>
+      <div><span className="date">2025</span><p><strong>University of Waterloo</strong><br />Index optimization for DeepSearch under the supervision of Prof. <a href="https://cs.uwaterloo.ca/~mli/" {...external}>Ming Li</a>.</p></div>
+      <div><span className="date">2023</span><p><strong>University of Washington</strong><br />Hi-C resolution enhancement with Prof. <a href="https://noble.gs.washington.edu/~wnoble/" {...external}>William Stafford Noble</a> and Prof. <a href="https://homes.cs.washington.edu/~swang/" {...external}>Sheng Wang</a>.</p></div>
+      <div><span className="date">2023</span><p><strong>Tsinghua AIR</strong><br />Protein–molecule representation learning with Prof. <a href="https://air.tsinghua.edu.cn/en/info/1046/1195.htm" {...external}>Yanyan Lan</a>.</p></div>
     </div>
     <p className="next-links"><a href="#/publications">Publications <Icon name="arrow" /></a><a href="#/projects">Projects <Icon name="arrow" /></a><a href="/cv/mycv.pdf" target="_blank" rel="noopener noreferrer">CV (PDF) <Icon name="arrow" /></a></p>
   </article>;
