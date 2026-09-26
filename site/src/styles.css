@@ -63,7 +63,6 @@ h1 { font-size: clamp(1.9rem, 2.7vw, 2.55rem); line-height: 1.18; letter-spacing
 .teaching-item p { margin: 0; color: #53616a; }
 .project-grid { display: grid; grid-template-columns: 1fr; gap: 18px; }
 .project-card { display: grid; grid-template-columns: 220px minmax(0, 1fr); border: 1px solid #e0e5e8; border-radius: 7px; overflow: hidden; background: #fff; }
-.project-card--text { grid-template-columns: 1fr; }
 .project-image-link { display: block; background: #f3f6f7; }
 .project-image-link img { display: block; width: 100%; height: 100%; min-height: 190px; max-height: 235px; object-fit: contain; padding: 12px; }
 .project-copy { padding: 20px 22px 22px; }
@@ -72,10 +71,6 @@ h1 { font-size: clamp(1.9rem, 2.7vw, 2.55rem); line-height: 1.18; letter-spacing
 .project-copy h2 a:hover { color: #287ca5; }
 .project-copy p { font-size: .9rem; color: #56636c; line-height: 1.58; margin: 0 0 12px; }
 .project-copy .text-link + .text-link { margin-left: 18px; }
-.earlier-work { margin-top: 38px; border-top: 1px solid #e1e6e9; padding-top: 15px; }
-.earlier-work h2 { font-size: 1.2rem; }
-.earlier-work ul { padding-left: 20px; line-height: 1.8; }
-.earlier-work p { font-size: .94rem; }
 .back-link { display: inline-block; margin-bottom: 30px; font-size: .9rem; text-decoration: none; }
 .project-detail { max-width: 980px; }
 .legacy-article { line-height: 1.7; overflow-wrap: anywhere; }
@@ -93,7 +88,7 @@ h1 { font-size: clamp(1.9rem, 2.7vw, 2.55rem); line-height: 1.18; letter-spacing
 .site-footer a { color: inherit; text-decoration: none; }
 .site-footer div:last-child { display: flex; gap: 10px; }
 
-:root[data-theme="dark"] .site-header, :root[data-theme="dark"] .site-footer, :root[data-theme="dark"] .publication, :root[data-theme="dark"] .experience, :root[data-theme="dark"] .experience > div, :root[data-theme="dark"] .teaching-item, :root[data-theme="dark"] .earlier-work { border-color: #41484d; }
+:root[data-theme="dark"] .site-header, :root[data-theme="dark"] .site-footer, :root[data-theme="dark"] .publication, :root[data-theme="dark"] .experience, :root[data-theme="dark"] .experience > div, :root[data-theme="dark"] .teaching-item { border-color: #41484d; }
 :root[data-theme="dark"] .profile-hero { background: #30393e; border-color: #5ba9c3; }
 :root[data-theme="dark"] .portrait-panel { background: #54636a; }
 :root[data-theme="dark"] .header-inner nav a, :root[data-theme="dark"] .profile-summary, :root[data-theme="dark"] .profile-links li, :root[data-theme="dark"] .profile-links svg, :root[data-theme="dark"] .section-intro, :root[data-theme="dark"] .publication p, :root[data-theme="dark"] .project-copy p, :root[data-theme="dark"] .teaching-item p { color: #b6c0c6; }

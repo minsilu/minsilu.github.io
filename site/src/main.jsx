@@ -59,46 +59,19 @@ const projects = [
     imageAlt: 'WildChat-MCP architecture',
     link: 'https://github.com/minsilu/WildChat-MCP',
     linkLabel: 'Code'
-  },
-  {
-    slug: 'glue',
-    area: 'Graph learning',
-    title: 'Multiomics integration',
-    description: 'Graph representation learning that brings distinct biological data modalities into a shared latent space.',
-    image: '/project-images/glue.png',
-    imageAlt: 'Multiomics graph learning diagram'
-  },
-  {
-    slug: 'ppi',
-    area: 'Graph learning',
-    title: 'Graph regularization for target discovery',
-    description: 'Structural interaction networks used as a graph regularization prior for unsupervised target discovery.',
-    image: '/project-images/ppi.png',
-    imageAlt: 'Graph regularization diagram'
-  },
-  {
-    slug: 'gomo',
-    area: 'AI search',
-    title: 'Gomoku Genius',
-    description: 'A study of minimax, alpha-beta pruning, truncated search, and Monte Carlo tree search for classic board games.'
-  },
-  {
-    slug: 'twitter',
-    area: 'Machine learning',
-    title: 'Twitter sentiment classification',
-    description: 'A comparison of classical machine learning models, ResNet, and BERT for four-way sentiment classification.',
-    image: '/projects/twitter/f1.png',
-    imageAlt: 'Sentiment model results'
   }
 ];
 
-const earlierProjects = [
-  { slug: 'hictime', title: 'Time-series Hi-C analysis' },
-  { slug: 'antibody', title: 'HER2 and CXCR4 bispecific antibodies' },
-  { slug: 'crispr', title: 'Genome-wide CRISPR screening' }
-];
-
-const detailTitles = Object.fromEntries([...projects, ...earlierProjects].map(({ slug, title }) => [slug, title]));
+const detailTitles = {
+  ...Object.fromEntries(projects.map(({ slug, title }) => [slug, title])),
+  glue: 'Multiomics integration',
+  ppi: 'Graph regularization for target discovery',
+  gomo: 'Gomoku Genius',
+  twitter: 'Twitter sentiment classification',
+  hictime: 'Time-series Hi-C analysis',
+  antibody: 'HER2 and CXCR4 bispecific antibodies',
+  crispr: 'Genome-wide CRISPR screening'
+};
 
 function getRoute() {
   const route = window.location.hash.replace(/^#\/?/, '').replace(/\/$/, '').toLowerCase();
@@ -193,14 +166,13 @@ function Projects() {
   return <section className="content">
     <p className="eyebrow">Selected work</p>
     <h1>Projects</h1>
-    <p className="section-intro">A focused selection of research projects across retrieval, multimodal learning, and computational biology.</p>
-    <div className="project-grid">{projects.map((project) => <article className={`project-card${project.image ? '' : ' project-card--text'}`} key={project.title}>
+    <p className="section-intro">Selected projects in information retrieval, representation learning, generative models, and LLM systems.</p>
+    <div className="project-grid">{projects.map((project) => <article className="project-card" key={project.title}>
       {project.image && <a className="project-image-link" href={`#/projects/${project.slug}`} aria-label={`Read about ${project.title}`}><img src={project.image} alt={project.imageAlt} loading="lazy" /></a>}
       <div className="project-copy"><span className="venue">{project.area}</span><h2><a href={`#/projects/${project.slug}`}>{project.title}</a></h2><p>{project.description}</p>
       <a className="text-link" href={`#/projects/${project.slug}`}>Read more <Icon name="arrow" /></a>
       {project.link && <a className="text-link" href={project.link} {...external}>{project.linkLabel} <Icon name="arrow" /></a>}</div>
     </article>)}</div>
-    <div className="earlier-work"><h2>Earlier work</h2><ul>{earlierProjects.map((project) => <li key={project.slug}><a href={`#/projects/${project.slug}`}>{project.title}</a></li>)}</ul><p><a href="https://main.d3rbw5kot0pnhw.amplifyapp.com/" {...external}>Venue Hub website</a></p></div>
   </section>;
 }
 
@@ -264,7 +236,7 @@ function App() {
       </nav>
       <button className="theme-toggle" type="button" onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')} aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} theme`} title={`Switch to ${theme === 'light' ? 'dark' : 'light'} theme`}><Icon name={theme === 'light' ? 'moon' : 'sun'} /></button>
     </div></header>
-    <div className="layout"><Profile /><main id="main-content">{route === 'about' ? <About /> : route === 'publications' ? <Publications /> : route === 'teaching' ? <Teaching /> : route === 'projects' ? <Projects /> : <ProjectDetail slug={route.split('/')[1]} />}</main></div>
+    <div className="layout">{route === 'about' && <Profile />}<main id="main-content">{route === 'about' ? <About /> : route === 'publications' ? <Publications /> : route === 'teaching' ? <Teaching /> : route === 'projects' ? <Projects /> : <ProjectDetail slug={route.split('/')[1]} />}</main></div>
     <footer className="site-footer"><div>© {new Date().getFullYear()} Minsi Lu</div><div><a href="mailto:minsilu0330@gmail.com">Email</a><span aria-hidden="true">·</span><a href="https://github.com/minsilu" {...external}>GitHub</a></div></footer>
   </div>;
 }
