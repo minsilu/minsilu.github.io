@@ -12,8 +12,8 @@ for (const name of ['assets', 'project-images']) {
 }
 rmSync(path.join(root, 'projects'), { recursive: true, force: true });
 cpSync(path.join(dist, 'projects'), path.join(root, 'projects'), { recursive: true });
-mkdirSync(path.join(root, 'cv'), { recursive: true });
-copyFileSync(path.join(dist, 'cv', 'mycv.pdf'), path.join(root, 'cv', 'mycv.pdf'));
+rmSync(path.join(root, 'cv'), { recursive: true, force: true });
+cpSync(path.join(dist, 'cv'), path.join(root, 'cv'), { recursive: true });
 for (const name of ['index.html', 'portrait.jpg', 'favicon.ico']) {
   copyFileSync(path.join(dist, name), path.join(root, name));
 }

@@ -132,7 +132,7 @@ function About() {
       <div><span className="date">2023</span><p><strong>University of Washington</strong><br />Hi-C resolution enhancement with Prof. <a href="https://noble.gs.washington.edu/~wnoble/" {...external}>William Stafford Noble</a> and Prof. <a href="https://homes.cs.washington.edu/~swang/" {...external}>Sheng Wang</a>.</p></div>
       <div><span className="date">2023</span><p><strong>Tsinghua AIR</strong><br />Protein–molecule representation learning with Prof. <a href="https://air.tsinghua.edu.cn/en/info/1046/1195.htm" {...external}>Yanyan Lan</a>.</p></div>
     </div>
-    <p className="next-links"><a href="#/publications">Publications <Icon name="arrow" /></a><a href="#/teaching">Teaching <Icon name="arrow" /></a><a href="#/projects">Projects <Icon name="arrow" /></a><a href="/cv/mycv.pdf" target="_blank" rel="noopener noreferrer">CV (PDF) <Icon name="arrow" /></a></p>
+    <p className="next-links"><a href="#/publications">Publications <Icon name="arrow" /></a><a href="#/teaching">Teaching <Icon name="arrow" /></a><a href="#/projects">Projects <Icon name="arrow" /></a><a href="/cv/Minsi%20Lu-CV-lab-pre.pdf" target="_blank" rel="noopener noreferrer">CV (PDF) <Icon name="arrow" /></a></p>
   </article>;
 }
 
@@ -232,7 +232,7 @@ function App() {
         <a href="#/publications" aria-current={route === 'publications' ? 'page' : undefined}>Publications</a>
         <a href="#/projects" aria-current={route.startsWith('projects') ? 'page' : undefined}>Projects</a>
         <a href="#/teaching" aria-current={route === 'teaching' ? 'page' : undefined}>Teaching</a>
-        <a href="/cv/mycv.pdf" target="_blank" rel="noopener noreferrer">CV</a>
+        <a href="/cv/Minsi%20Lu-CV-lab-pre.pdf" target="_blank" rel="noopener noreferrer">CV</a>
       </nav>
       <button className="theme-toggle" type="button" onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')} aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} theme`} title={`Switch to ${theme === 'light' ? 'dark' : 'light'} theme`}><Icon name={theme === 'light' ? 'moon' : 'sun'} /></button>
     </div></header>
